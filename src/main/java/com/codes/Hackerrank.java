@@ -167,11 +167,10 @@ public class Hackerrank {
             char[] ch = new char[arr[i]];
             if (i % 2 == 0) {
                 Arrays.fill(ch, '1');
-                sb.append(ch);
             } else {
                 Arrays.fill(ch, '0');
-                sb.append(ch);
             }
+            sb.append(ch);
         }
         int index = sb.substring(0, sb.lastIndexOf("1")).lastIndexOf("0");
         char[] c = sb.toString().toCharArray();
@@ -561,12 +560,11 @@ public class Hackerrank {
                 if (i < j) {
                     sb.append(a.charAt(i));
                     i++;
-                    continue;
                 } else {
                     sb.append(b.charAt(j));
                     j++;
-                    continue;
                 }
+                continue;
             }
         }
 
@@ -600,13 +598,12 @@ public class Hackerrank {
         for (char c : s.toCharArray()) {
             if (c == old) {
                 x += old - 'a' + 1;
-                set.add(x);
             } else {
                 old = c;
                 x = old - 'a' + 1;
-                set.add(x);
 
             }
+            set.add(x);
         }
         String[] ans = new String[queries.length];
         for (int i = 0; i < queries.length; i++) {
@@ -708,11 +705,10 @@ public class Hackerrank {
             if (i == 1) {
                 ini = ini * 2;
                 i = ini;
-                count++;
             } else {
                 i--;
-                count++;
             }
+            count++;
         }
         return i;
 
@@ -1488,47 +1484,6 @@ public class Hackerrank {
         return result;
     }
 
-    public static int solution(String S) {
-        Stack<Integer> st = new Stack<>();
-        String operations = "DUP, POP, +, -";
-        for (String s : S.split(" ")) {
-            if (operations.contains(s)) {
-                switch (s) {
-                    case "DUP":
-                        if (!st.empty()) {
-                            st.push(st.peek());
-                        }
-                        break;
-                    case "POP":
-                        if (!st.empty()) {
-                            st.pop();
-                        } else return -1;
-                        break;
-                    case "+":
-                        if (!st.empty()) {
-                            int x = st.pop();
-                            if (!st.empty()) {
-                                st.push(x + st.pop());
-                            } else return -1;
-                        } else return -1;
-                        break;
-                    case "-":
-                        if (!st.empty()) {
-                            int x = st.pop();
-                            if (!st.empty()) {
-                                st.push(x - st.pop());
-                            } else return -1;
-                        } else return -1;
-                        break;
-
-                }
-            } else {
-                st.push(Integer.parseInt(s));
-            }
-        }
-
-        return !st.empty() ? st.peek() : -1;
-    }
 
     public static int minimumTime(List<Integer> ability, long processes) {
         // Write your code here
@@ -1648,7 +1603,46 @@ public class Hackerrank {
         return count;
     }
 
+    // sherlock and cost
+    public static int cost(int[] B) {
 
-    
+        return 0;
+    }
+
+    static int anadrome(String s) {
+        Map<String, Integer> map = new HashMap<>();
+        List<String> x1 = Arrays.asList(s.split(""));
+        Set<String> s1 = new HashSet<>(x1);
+        for (String x : s1) {
+            map.put(x, Collections.frequency(x1, x));
+        }
+        return Math.max((int) map.values().stream().filter(i -> i % 2 != 0).count() - 1, 0);
+    }
+
+    static boolean checkPalindromwithoutCase(String s) {
+        return s.equalsIgnoreCase(new StringBuilder(s).reverse().toString());
+    }
+
+    static List<List<String>> allPossiblePalindromicDistribution(String s) {
+        List<List<String>> res = new ArrayList<>();
+        findAll(s, res, new ArrayList<>());
+        return res;
+    }
+
+    private static void findAll(String s, List<List<String>> res, ArrayList<String> strings) {
+        if (s.length() == 0) {
+            res.add(new ArrayList<>(strings));
+            return;
+        }
+        for (int i = 0; i < s.length(); i++) {
+            String leftPoint = s.substring(0, i + 1);
+            if (checkPalindromwithoutCase(leftPoint)) {
+                strings.add(leftPoint);
+                findAll(s.substring(i + 1), res, strings);
+                strings.remove(strings.size() - 1);
+            }
+        }
+    }
+
 
 }

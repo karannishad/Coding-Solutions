@@ -5,7 +5,6 @@ import java.util.stream.Collectors;
 
 public class CodingRounds {
 
-
     public static int minMeetingRooms(int[][] intervals) {
         Map<Integer, Integer> map = new TreeMap<>();
         for (int[] i : intervals) {
@@ -85,5 +84,58 @@ public class CodingRounds {
 
         return ar.stream().collect(Collectors.joining(" "));
     }
+
+    static String[] sortToArray(String source) {
+        return Arrays.stream(source.split(" ")).map(s ->
+                Arrays.stream(s.split("")).sorted().collect(Collectors.joining())
+        ).sorted().toArray(String[]::new);
+    }
+
+    static boolean nestedAnagram(String source, String target) {
+        if (source.length() != target.length()) {
+            return false;
+        }
+        String[] sourceArray = sortToArray(source);
+        String[] targetArray = sortToArray(target);
+        for (int i = 0; i < sourceArray.length; i++) {
+            if (!sourceArray[i].equals(targetArray[i])) return false;
+        }
+        return true;
+    }
+
+    static int[] stringToArray(String arr) {
+        int[] array = new int[26];
+        for (char c : arr.toCharArray()) {
+            array[c - 'a'] += 1;
+        }
+        return array;
+    }
+
+    static int possibleTransfromations(String initial, String[] dict) {
+        int count = 0;
+        int[] start = stringToArray(initial);
+        for (String i : dict) {
+            int[] temp = stringToArray(i);
+            int piv = 0, changeCount = 0;
+            boolean flag = true;
+            for (int j = 0; j < 26; j++) {
+                if (start[j] != temp[j]) {
+                    if (changeCount < 2) {
+
+                        changeCount++;
+                    } else {
+                        flag = false;
+                        break;
+                    }
+                }
+            }
+            if (flag && piv == 0) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+
 
 }
