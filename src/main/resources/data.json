@@ -1,0 +1,20 @@
+{
+  "account_number": "39474314",
+  "document_date": "2018-12-31",
+  "rep_number": "1DS4",
+  "document_code": "TAX",
+  "url": "https://uat.digitalpresentment.com/tf/dp/documents/detail.pdf?id=000023a8-eb4d-44bc-8c8d-df6c57663268&client_id=HTS&product_id=HTSTAX",
+  "client_id": "HTS",
+  "sequence_number": "57486",
+  "branch_number": "1D",
+  "document_sub_type": "5498",
+  "media_type": "application/pdf",
+  "process_date": "2019-09-23T17:24:29Z",
+  "product_id": "HTSTAX",
+  "customer_name": "IRA Homan S",
+  "id": "000023a8-eb4d-44bc-8c8d-df6c57663268",
+  "page_count": "4",
+  "entity": "1H",
+  "run_date": "2019-09-23",
+  "presentment_release_status_cd": "ENA"
+}

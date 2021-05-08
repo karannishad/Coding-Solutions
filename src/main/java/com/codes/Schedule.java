@@ -1,6 +1,10 @@
 package com.codes;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Scanner;
 
 class StudentClass {
     public int _start;
@@ -28,6 +32,25 @@ public class Schedule {
 
     public Schedule() {
         this._classes = new LinkedList<>();
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int noOfDays = Integer.parseInt(sc.nextLine().trim());
+
+        for (int i = 1; i <= noOfDays; i++) {
+            int noOfSubjects = Integer.parseInt(sc.nextLine().trim());
+
+            Schedule s = new Schedule();
+            for (int j = 0; j < noOfSubjects; j++) {
+                String[] line = sc.nextLine().split(" ");
+
+                s.addClass(line[0], Integer.parseInt(line[1].replace(":", "")), Integer.parseInt(line[2].replace(":", "")));
+            }
+            System.out.println("maximum classes: " + s.getMaxSchedule());
+        }
+
     }
 
     public void addClass(String name, int startTime, int endTime) {
@@ -68,25 +91,6 @@ public class Schedule {
     public int getMaxSchedule() {
         Collection<StudentClass> selected = new ArrayList<>();
         return getMaxSchedule(0, selected);
-    }
-
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-
-        int noOfDays = Integer.parseInt(sc.nextLine().trim());
-
-        for (int i = 1; i <= noOfDays; i++) {
-            int noOfSubjects = Integer.parseInt(sc.nextLine().trim());
-
-            Schedule s = new Schedule();
-            for (int j = 0; j < noOfSubjects; j++) {
-                String[] line = sc.nextLine().split(" ");
-
-                s.addClass(line[0], Integer.parseInt(line[1].replace(":", "")), Integer.parseInt(line[2].replace(":", "")));
-            }
-            System.out.println("maximum classes: " + s.getMaxSchedule());
-        }
-
     }
 }
 

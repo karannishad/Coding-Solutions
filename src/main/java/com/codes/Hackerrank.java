@@ -5,7 +5,22 @@ import org.slf4j.LoggerFactory;
 
 import java.math.BigInteger;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.Stack;
+import java.util.TreeMap;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 public class Hackerrank {
@@ -298,11 +313,11 @@ public class Hackerrank {
         List<Integer> aa = new ArrayList<>(aak);
         Collections.sort(aa, Collections.reverseOrder());
         Set<Integer> ss = new LinkedHashSet<>(aa);
-        Iterator it = ss.iterator();
+        Iterator<Integer> it = ss.iterator();
         int[] x = new int[orders.length];
         int l = orders.length;
         while (it.hasNext()) {
-            int tem = (int) it.next();
+            int tem = it.next();
             for (int i = 0; i < aak.size(); i++) {
                 if (aak.get(i) == tem)
                     x[--l] = i + 1;
@@ -331,7 +346,7 @@ public class Hackerrank {
         for (char c : x.toCharArray())
             clist.add(c);
         Set<Character> c = new TreeSet<>(clist);
-        Iterator it = c.iterator();
+        Iterator<Character> it = c.iterator();
         int odd = 0;
         int marker = Collections.frequency(clist, it.next());
         while (it.hasNext()) {
@@ -406,7 +421,7 @@ public class Hackerrank {
         }
         int odd = 0;
         Set<Character> cset = new TreeSet<>(c);
-        Iterator it = cset.iterator();
+        Iterator<Character> it = cset.iterator();
         while (it.hasNext()) {
             if (Collections.frequency(c, it.next()) % 2 != 0)
                 odd++;
@@ -488,7 +503,7 @@ public class Hackerrank {
             }
         }
         if (sb.toString().length() == 0) System.out.println("INVALID RANGE");
-        else System.out.println(sb.toString());
+        else System.out.println(sb);
     }
 
     public static long taumBday(int b, int w, int bc, int wc, int z) {
@@ -592,7 +607,7 @@ public class Hackerrank {
     }
 
     static String[] weightedUniformStrings(String s, int[] queries) {
-        Set<Integer> set = new TreeSet();
+        Set<Integer> set = new TreeSet<>();
         int x = 0;
         char old = 'X';
         for (char c : s.toCharArray()) {
@@ -1438,14 +1453,6 @@ public class Hackerrank {
         return strings;
     }
 
-    public int[] solution(int N) {
-        int[] arr = new int[N];
-        for (int i = 0; i < N; i++) {
-            arr[i] = i + 1;
-        }
-        return arr;
-    }
-
     public static int lengthOfLongestSubstring(String s) {
         int n = s.length();
         Set<Character> set = new HashSet<>();
@@ -1484,7 +1491,6 @@ public class Hackerrank {
         return result;
     }
 
-
     public static int minimumTime(List<Integer> ability, long processes) {
         // Write your code here
         int count = 0;
@@ -1503,14 +1509,6 @@ public class Hackerrank {
         return count;
     }
 
-    static class StringComparator implements Comparator<String> {
-        @Override
-        public int compare(String o1, String o2) {
-            return Integer.compare(o2.length(), o1.length());
-        }
-    }
-
-
     static int formula(int totalbeforetrue, int k) {
         return totalbeforetrue + (totalbeforetrue / k) * 5 + 1;
     }
@@ -1527,6 +1525,103 @@ public class Hackerrank {
         int maxformulae = formula(totalbeforeTruemax, k);
         int min = formula(tbtmin, k);
         System.out.println(maxformulae + " " + min);
+    }
+
+    public static int minimumFlips(String s) {
+        char c = '0';
+        int count = 0;
+        for (char x : s.toCharArray()) {
+            if (c != x) {
+                count++;
+                c = x;
+            }
+        }
+        return count;
+    }
+
+    // sherlock and cost
+    public static int cost(int[] B) {
+
+        return 0;
+    }
+
+    static int anadrome(String s) {
+        Map<String, Integer> map = new HashMap<>();
+        List<String> x1 = Arrays.asList(s.split(""));
+        Set<String> s1 = new HashSet<>(x1);
+        for (String x : s1) {
+            map.put(x, Collections.frequency(x1, x));
+        }
+        return Math.max((int) map.values().stream().filter(i -> i % 2 != 0).count() - 1, 0);
+    }
+
+    static boolean checkPalindromwithoutCase(String s) {
+        return s.equalsIgnoreCase(new StringBuilder(s).reverse().toString());
+    }
+
+    static List<List<String>> allPossiblePalindromicDistribution(String s) {
+        List<List<String>> res = new ArrayList<>();
+        findAll(s, res, new ArrayList<>());
+        return res;
+    }
+
+    private static void findAll(String s, List<List<String>> res, ArrayList<String> strings) {
+        if (s.length() == 0) {
+            res.add(new ArrayList<>(strings));
+            return;
+        }
+        for (int i = 0; i < s.length(); i++) {
+            String leftPoint = s.substring(0, i + 1);
+            if (checkPalindromwithoutCase(leftPoint)) {
+                strings.add(leftPoint);
+                findAll(s.substring(i + 1), res, strings);
+                strings.remove(strings.size() - 1);
+            }
+        }
+    }
+
+    static String[] bigSorting(String[] unsorted) {
+        Arrays.sort(unsorted, (sx, sy) -> {
+            if (sx.length() == sy.length()) {
+                return sx.compareTo(sy);
+            } else if (sx.length() > sy.length())
+                return 1;
+            else return -1;
+        });
+        return unsorted;
+    }
+
+    static boolean alternateString(String s1) {
+        String reg = "[" + s1.substring(0, 2) + "]+";
+        if (s1.length() % 2 == 0) {
+            return s1.matches(reg);
+        }
+
+        return s1.substring(0, s1.length() - 1).matches(reg) && s1.charAt(s1.length() - 1) == s1.charAt(0);
+    }
+
+    static int makingAnagrams(String s1, String s2) {
+        int[] ar = new int[26];
+        for (char c : s1.toCharArray()) {
+            ar[c - 'a']++;
+        }
+        for (char c1 : s2.toCharArray()) {
+            ar[c1 - 'a']--;
+        }
+        int ans = 0;
+        for (int i : ar) {
+            ans += Math.abs(i);
+        }
+        return ans;
+
+    }
+
+    public int[] solution(int N) {
+        int[] arr = new int[N];
+        for (int i = 0; i < N; i++) {
+            arr[i] = i + 1;
+        }
+        return arr;
     }
 
     String balancedStringWithWildcard(String query) {
@@ -1590,59 +1685,11 @@ public class Hackerrank {
 
     }
 
-
-    public static int minimumFlips(String s) {
-        char c = '0';
-        int count = 0;
-        for (char x : s.toCharArray()) {
-            if (c != x) {
-                count++;
-                c = x;
-            }
-        }
-        return count;
-    }
-
-    // sherlock and cost
-    public static int cost(int[] B) {
-
-        return 0;
-    }
-
-    static int anadrome(String s) {
-        Map<String, Integer> map = new HashMap<>();
-        List<String> x1 = Arrays.asList(s.split(""));
-        Set<String> s1 = new HashSet<>(x1);
-        for (String x : s1) {
-            map.put(x, Collections.frequency(x1, x));
-        }
-        return Math.max((int) map.values().stream().filter(i -> i % 2 != 0).count() - 1, 0);
-    }
-
-    static boolean checkPalindromwithoutCase(String s) {
-        return s.equalsIgnoreCase(new StringBuilder(s).reverse().toString());
-    }
-
-    static List<List<String>> allPossiblePalindromicDistribution(String s) {
-        List<List<String>> res = new ArrayList<>();
-        findAll(s, res, new ArrayList<>());
-        return res;
-    }
-
-    private static void findAll(String s, List<List<String>> res, ArrayList<String> strings) {
-        if (s.length() == 0) {
-            res.add(new ArrayList<>(strings));
-            return;
-        }
-        for (int i = 0; i < s.length(); i++) {
-            String leftPoint = s.substring(0, i + 1);
-            if (checkPalindromwithoutCase(leftPoint)) {
-                strings.add(leftPoint);
-                findAll(s.substring(i + 1), res, strings);
-                strings.remove(strings.size() - 1);
-            }
+    static class StringComparator implements Comparator<String> {
+        @Override
+        public int compare(String o1, String o2) {
+            return Integer.compare(o2.length(), o1.length());
         }
     }
-
 
 }
