@@ -7,8 +7,22 @@ pipeline {
             steps {
                 sh 'echo "Welcome to git"'
                 sh 'java -version'
-                sh 'mvn --version'
+
             }
         }
+        stage('Sonarqube') {
+            environment {
+                scannerHome = tool 'sonar-scanner'
+            }
+            steps {
+                withSonarQubeEnv('sonarqube') {
+                    sh "${scannerHome}/bin/sonar-scanner"
+                }
+                timeout(time: 10, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: true
+                }
+            }
+        }
+
     }
 }
